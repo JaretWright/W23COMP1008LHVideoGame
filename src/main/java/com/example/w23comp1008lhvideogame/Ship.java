@@ -13,6 +13,9 @@ public class Ship extends Sprite {
 
     private ArrayList<Missile> activeMissiles;
 
+    private int missilePause;
+    private final int REFRESHRATE = 10;
+
     /**
      * The ship image is known, so we do not need to pass that into the constructor
      * Similarly, the image height and width are known, so we can remove those arguments
@@ -24,6 +27,7 @@ public class Ship extends Sprite {
         super(new Image(Main.class.getResourceAsStream("images/ship.png")), posX, posY,
                 100, 70, 8);
         activeMissiles = new ArrayList<>();
+        missilePause = REFRESHRATE;
     }
 
     /**
@@ -65,7 +69,12 @@ public class Ship extends Sprite {
 
     public void shootMissile()
     {
-        activeMissiles.add(new Missile(posX,posY));
+        if (missilePause<0)
+        {
+            activeMissiles.add(new Missile(posX+imageWidth,posY+imageHeight/2));
+            missilePause = REFRESHRATE;
+        }
+
     }
 
     /**
@@ -74,7 +83,11 @@ public class Ship extends Sprite {
      */
     public void draw(GraphicsContext gc)
     {
+        missilePause--;
+
         super.draw(gc);
+
+        activeMissiles.removeIf(missile -> !missile.isAlive());
 
         //loop over the missiles and display each one
         for (Missile missile : activeMissiles)

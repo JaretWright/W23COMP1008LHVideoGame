@@ -11,6 +11,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 import java.security.Key;
+import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GameBoardController {
@@ -48,6 +50,13 @@ public class GameBoardController {
         Image background = new Image(Main.class.getResourceAsStream("images/space.png"));
         Ship ship = new Ship(100,100);
 
+        //SecureRandom is a class that creates random numbers
+        SecureRandom rng = new SecureRandom();
+        ArrayList<Alien> aliens = new ArrayList<>();
+
+        for (int i=1; i<=12; i++)
+            aliens.add(new Alien(rng.nextInt(500,1000), rng.nextInt(0,740)));
+
         AnimationTimer timer = new AnimationTimer() {
             /**
              * The "handle()" method is abstract in the AnimationTimer class, so we
@@ -69,6 +78,10 @@ public class GameBoardController {
 
                 //draw the ship
                 ship.draw(gc);
+
+                //draw the Aliens
+                for (Alien alien : aliens)
+                    alien.draw(gc);
             }
         };
 

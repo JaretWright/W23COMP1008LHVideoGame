@@ -61,17 +61,17 @@ public class GameBoardController {
             /**
              * The "handle()" method is abstract in the AnimationTimer class, so we
              * need to override it here and tell it what we want it to do.
-             *
+             * <p>
              * Anything inside the {...} will be executed everytime the timer advances
-             * @param now
-             *            The timestamp of the current frame given in nanoseconds. This
+             *
+             * @param now The timestamp of the current frame given in nanoseconds. This
              *            value will be the same for all {@code AnimationTimers} called
              *            during one frame.
              */
             @Override
             public void handle(long now) {
                 //draw the background
-                gc.drawImage(background,0,0,anchorPane.getWidth(),anchorPane.getHeight());
+                gc.drawImage(background, 0, 0, anchorPane.getWidth(), anchorPane.getHeight());
 
                 //update the position of the ship
                 updateShip(ship);
@@ -80,8 +80,17 @@ public class GameBoardController {
                 ship.draw(gc);
 
                 //draw the Aliens
-                for (Alien alien : aliens)
+                for (Alien alien : aliens) {
                     alien.draw(gc);
+
+                    for (Missile missile : ship.getActiveMissiles()) {
+                        if (missile.collidesWith(alien)) {
+                            //shown an explosion
+                            missile.setAlive(false);
+                            alien.setAlive(false);
+                        }
+                    }
+                }
             }
         };
 

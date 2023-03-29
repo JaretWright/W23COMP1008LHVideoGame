@@ -29,9 +29,8 @@ public class GameBoardController {
         GraphicsContext gc = canvas.getGraphicsContext2D();  //this is our "paint brush" to draw images
 
         //Create a Sprite to display a ship
-        Image shipImage = new Image(Main.class.getResourceAsStream("images/ship.png"));
         Image background = new Image(Main.class.getResourceAsStream("images/space.png"));
-        Sprite ship = new Sprite(shipImage,100,100,100,70,2);
+        Ship ship = new Ship(100,100);
 
         AnimationTimer timer = new AnimationTimer() {
             /**

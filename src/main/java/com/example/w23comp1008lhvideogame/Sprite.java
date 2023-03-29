@@ -1,5 +1,6 @@
 package com.example.w23comp1008lhvideogame;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Sprite {
@@ -72,4 +73,23 @@ public class Sprite {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
+    public void draw(GraphicsContext gc)
+    {
+        gc.drawImage(image,posX,posY,imageWidth,imageHeight);
+    }
+
+    /**
+     * Increase the x coordinate moves the Sprite to the right
+     */
+    public void moveRight()
+    {
+        posX = posX + speed;
+    }
+
+    public void moveDown()
+    {
+        posY += speed;
+    }
+
 }

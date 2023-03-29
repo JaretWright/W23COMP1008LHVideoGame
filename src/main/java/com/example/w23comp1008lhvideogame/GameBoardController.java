@@ -85,5 +85,7 @@ public class GameBoardController {
             ship.moveLeft();
         if (activeKeys.contains(KeyCode.UP))
             ship.moveUp();
+        if (activeKeys.contains(KeyCode.SPACE))
+            ship.shootMissile();
     }
 }

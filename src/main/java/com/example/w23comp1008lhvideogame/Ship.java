@@ -1,6 +1,9 @@
 package com.example.w23comp1008lhvideogame;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.util.ArrayList;
 
 /**
  * When we write "extends" that means we are creating a custom version of the Sprite
@@ -8,6 +11,7 @@ import javafx.scene.image.Image;
  */
 public class Ship extends Sprite {
 
+    private ArrayList<Missile> activeMissiles;
 
     /**
      * The ship image is known, so we do not need to pass that into the constructor
@@ -19,6 +23,7 @@ public class Ship extends Sprite {
     public Ship(int posX, int posY) {
         super(new Image(Main.class.getResourceAsStream("images/ship.png")), posX, posY,
                 100, 70, 8);
+        activeMissiles = new ArrayList<>();
     }
 
     /**
@@ -41,8 +46,8 @@ public class Ship extends Sprite {
 
         if (posY > furthestDown)
             posY=furthestDown;
-
     }
+
     //create method for moveLeft and move up
     public void moveLeft()
     {
@@ -56,6 +61,24 @@ public class Ship extends Sprite {
         posY -= speed;
         if (posY<0)
             posY=0;
+    }
+
+    public void shootMissile()
+    {
+        activeMissiles.add(new Missile(posX,posY));
+    }
+
+    /**
+     * The draw method in the Sprite class will draw the Sprite, but a Ship needs to
+     * also draw all of it's missiles, so we create a custom draw method
+     */
+    public void draw(GraphicsContext gc)
+    {
+        super.draw(gc);
+
+        //loop over the missiles and display each one
+        for (Missile missile : activeMissiles)
+            missile.draw(gc);
     }
 
 }

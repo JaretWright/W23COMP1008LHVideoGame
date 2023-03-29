@@ -19,4 +19,28 @@ public class Ship extends Sprite {
         super(new Image(Main.class.getResourceAsStream("images/ship.png")), posX, posY,
                 100, 70, 8);
     }
+
+    /**
+     * Increase the x coordinate moves the Sprite to the right
+     */
+    public void moveRight()
+    {
+        posX = posX + speed;
+    }
+
+    public void moveDown()
+    {
+        posY += speed;
+    }
+    //create method for moveLeft and move up
+    public void moveLeft()
+    {
+        posX -= speed;
+    }
+
+    public void moveUp()
+    {
+        posY -= speed;
+    }
+
 }

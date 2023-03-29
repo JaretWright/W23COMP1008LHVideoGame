@@ -7,7 +7,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+
+import java.security.Key;
+import java.util.HashSet;
 
 public class GameBoardController {
 
@@ -17,9 +21,21 @@ public class GameBoardController {
     @FXML
     private Button startButton;
 
+    private HashSet<KeyCode> activeKeys;
+
     @FXML
     void startGame(ActionEvent event) {
         startButton.setVisible(false);
+
+        //configure the environment to know which keys are being pressed
+        //Sets are similar to a List (they hold collections of objects), but it automatically prevents duplicates
+        activeKeys = new HashSet<>();
+
+        //the -> is called a "lambda expression" and is covered in the Advanced course
+        //when a key is pressed, add it to the "activeKey" set
+        //when a key is released, remove it from the "activeKey" set
+        anchorPane.getScene().setOnKeyPressed(keyPressed -> activeKeys.add(keyPressed.getCode()));
+        anchorPane.getScene().setOnKeyReleased(keyReleased -> activeKeys.remove(keyReleased.getCode()));
 
         //create a canvas to "draw" on
         Canvas canvas = new Canvas(anchorPane.getWidth(),anchorPane.getHeight());
@@ -48,23 +64,26 @@ public class GameBoardController {
                 //draw the background
                 gc.drawImage(background,0,0,anchorPane.getWidth(),anchorPane.getHeight());
 
+                //update the position of the ship
+                updateShip(ship);
+
                 //draw the ship
                 ship.draw(gc);
-
-                //update the position the ship
-                ship.moveRight();
-
-                //create a method that allows us to move the ship down and test your code by running it
-                ship.moveDown();
-
-
             }
         };
 
         timer.start();
-
-
-
     }
 
+    private void updateShip(Ship ship)
+    {
+        if (activeKeys.contains(KeyCode.DOWN))
+            ship.moveDown();
+        if (activeKeys.contains(KeyCode.RIGHT))
+            ship.moveRight();
+        if (activeKeys.contains(KeyCode.LEFT))
+            ship.moveLeft();
+        if (activeKeys.contains(KeyCode.UP))
+            ship.moveUp();
+    }
 }

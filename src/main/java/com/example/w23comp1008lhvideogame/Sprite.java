@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Sprite {
     private Image image;
-    private int posX, posY, imageWidth, imageHeight, speed;
+    protected int posX, posY, imageWidth, imageHeight, speed;
     private boolean alive;
 
     public Sprite(Image image, int posX, int posY, int imageWidth, int imageHeight, int speed) {
@@ -77,19 +77,6 @@ public class Sprite {
     public void draw(GraphicsContext gc)
     {
         gc.drawImage(image,posX,posY,imageWidth,imageHeight);
-    }
-
-    /**
-     * Increase the x coordinate moves the Sprite to the right
-     */
-    public void moveRight()
-    {
-        posX = posX + speed;
-    }
-
-    public void moveDown()
-    {
-        posY += speed;
     }
 
 }

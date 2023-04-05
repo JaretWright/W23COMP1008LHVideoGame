@@ -71,7 +71,7 @@ public class Ship extends Sprite {
     {
         if (missilePause<0)
         {
-            activeMissiles.add(new Missile(posX+imageWidth,posY+imageHeight/2));
+            activeMissiles.add(new Missile(posX+imageWidth,posY+imageHeight/2-5));
             missilePause = REFRESHRATE;
         }
 

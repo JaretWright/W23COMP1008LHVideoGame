@@ -79,9 +79,20 @@ public class GameBoardController {
                 //draw the ship
                 ship.draw(gc);
 
+                //remove any deceased aliens
+                aliens.removeIf(alien -> !alien.isAlive());
+
                 //draw the Aliens
                 for (Alien alien : aliens) {
                     alien.draw(gc);
+
+                    //check if the alien hits the ship
+                    if (alien.collidesWith(ship))
+                    {
+                        ship.setAlive(false);
+                        alien.setAlive(false);
+                        stop();
+                    }
 
                     for (Missile missile : ship.getActiveMissiles()) {
                         if (missile.collidesWith(alien)) {

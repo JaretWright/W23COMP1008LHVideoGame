@@ -57,6 +57,9 @@ public class GameBoardController {
         for (int i=1; i<=12; i++)
             aliens.add(new Alien(rng.nextInt(500,1000), rng.nextInt(0,740)));
 
+        //ArrayList to track explosions
+        ArrayList<Explosion> explosions = new ArrayList<>();
+
         AnimationTimer timer = new AnimationTimer() {
             /**
              * The "handle()" method is abstract in the AnimationTimer class, so we
@@ -91,17 +94,22 @@ public class GameBoardController {
                     {
                         ship.setAlive(false);
                         alien.setAlive(false);
+                        explosions.add(new Explosion(alien.getPosX(), alien.getPosY()));
                         stop();
                     }
 
                     for (Missile missile : ship.getActiveMissiles()) {
                         if (missile.collidesWith(alien)) {
-                            //shown an explosion
+                            explosions.add(new Explosion(alien.getPosX(), alien.getPosY()));
                             missile.setAlive(false);
                             alien.setAlive(false);
                         }
                     }
                 }
+
+                //loop over all the explosions and draw them
+                for (Explosion explosion : explosions)
+                    explosion.draw(gc);
             }
         };
 

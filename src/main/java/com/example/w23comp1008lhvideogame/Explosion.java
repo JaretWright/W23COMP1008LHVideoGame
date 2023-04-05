@@ -19,7 +19,7 @@ public class Explosion extends Sprite{
      */
     public Explosion(int posX, int posY) {
         super(new Image(Explosion.class.getResourceAsStream("images/fullExplosion2.png")),
-                   posX, posY, 100,100, 0);
+                   posX, posY, 200,200, 0);
         explosionIndex=0;
         spriteStartX = new int[]{0, 170, 330, 520, 710};
         currentCount = REFRESH_RATE;
